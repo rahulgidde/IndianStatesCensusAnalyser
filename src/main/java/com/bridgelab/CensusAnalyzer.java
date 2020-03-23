@@ -51,6 +51,11 @@ public class CensusAnalyzer {
 
         //METHOD TO LOAD THE CSV FILE AND GET RECORDS
         int numberOfRecords = 0;
+        String extension = getFileExtension(new File(CSV_FILE_PATH));
+        if (extension.compareTo("csv") != 0) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
+                    "Invalid file extension");
+        }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
             CsvToBean<CSVStatesCode> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVStatesCode.class)
