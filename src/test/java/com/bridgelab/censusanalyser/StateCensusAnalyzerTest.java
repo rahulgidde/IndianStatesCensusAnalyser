@@ -52,17 +52,8 @@ public class StateCensusAnalyzerTest {
     }
 
     @Test
-    public void givenStatesCensusCSVFile_WhenNumberOfRecordsMatches_ThenReturnNumberOfRecords() throws StateAnalyzerException {
+    public void givenStatesCensusCSVFile_WhenNumberOfRecordsMatches_ThenReturnNumberOfRecords() {
         result = censusAnalyzer.getStateCodeRecords("./src/test/resources/StateCode.csv");
         Assert.assertEquals(37, result);
-    }
-
-    @Test
-    public void givenStatesCodeCSVFile_WhenImproper_ThenReturnFileNotFoundException() {
-        try {
-            result = censusAnalyzer.getStateCensusRecords("./src/test/resources/StateCensusDat.csv");
-        } catch (StateAnalyzerException e) {
-            Assert.assertEquals(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, e.type);
-        }
     }
 }
