@@ -2,8 +2,8 @@ package com.bridgelab;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class CSVStatesCensus {
-    @CsvBindByName(column = "State",required = true)
+public class CSVStatesCensus extends CSVStatesCode {
+    @CsvBindByName(column = "State", required = true)
     public String state;
 
     @CsvBindByName(column = "Population", required = true)

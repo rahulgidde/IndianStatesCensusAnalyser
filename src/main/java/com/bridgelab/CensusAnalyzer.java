@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -12,8 +13,8 @@ import java.util.Iterator;
 
 public class CensusAnalyzer {
 
-    ///METHOD TO LOAD THE CSV FILE AND GET RECORDS
-    public int getRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
+    //METHOD TO LOAD THE CSV FILE AND GET RECORDS
+    public int getStateCensusRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
         int numberOfRecords = 0;
         String extension = getFileExtension(new File(CSV_FILE_PATH));
         if (extension.compareTo("csv") != 0) {
@@ -41,6 +42,32 @@ public class CensusAnalyzer {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER,
                     "Wrong Delimiter Or Header");
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numberOfRecords;
+    }
+
+    public int getStateCodeRecords(String CSV_FILE_PATH) {
+
+        //METHOD TO LOAD THE CSV FILE AND GET RECORDS
+        int numberOfRecords = 0;
+        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+            CsvToBean<CSVStatesCode> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(CSVStatesCode.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+            Iterator<CSVStatesCode> csvStatesCodeIterator = csvToBean.iterator();
+            while (csvStatesCodeIterator.hasNext()) {
+                CSVStatesCode csvStatesCode = csvStatesCodeIterator.next();
+                System.out.println("SR.NO: " + csvStatesCode.getSrNo());
+                System.out.println("State: " + csvStatesCode.getState());
+                System.out.println("Name: " + csvStatesCode.getName());
+                System.out.println("TIN: " + csvStatesCode.getTIN());
+                System.out.println("StateCode: " + csvStatesCode.getStateCode());
+                System.out.println("-----------------------------");
+                numberOfRecords++;
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return numberOfRecords;
