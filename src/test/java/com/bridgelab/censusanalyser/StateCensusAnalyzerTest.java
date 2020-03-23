@@ -65,4 +65,13 @@ public class StateCensusAnalyzerTest {
             Assert.assertEquals(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, e.type);
         }
     }
+
+    @Test
+    public void givenStatesCodeCSVFile_WhenImproper_ThenReturnNoSuchTypeException() {
+        try {
+            result = censusAnalyzer.getStateCensusRecords("./src/test/resources/StateCensusData.pdf");
+        } catch (StateAnalyzerException e) {
+            Assert.assertEquals(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE, e.type);
+        }
+    }
 }
