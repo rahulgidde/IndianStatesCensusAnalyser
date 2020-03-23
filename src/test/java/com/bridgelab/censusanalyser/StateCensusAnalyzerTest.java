@@ -1,15 +1,26 @@
 package com.bridgelab.censusanalyser;
 
 import com.bridgelab.CensusAnalyzer;
+import com.bridgelab.StateAnalyzerException;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class StateCensusAnalyzerTest {
     CensusAnalyzer censusAnalyzer = new CensusAnalyzer();
+    int result;
 
     @Test
-    public void givenStatesCensusCSVFile_WhenNumberOfRecordMatches_ThenReturnNumberOfRecords() {
-        int result = censusAnalyzer.getRecords();
+    public void givenStatesCensusCSVFile_WhenNumberOfRecordMatches_ThenReturnNumberOfRecords() throws StateAnalyzerException {
+        result = censusAnalyzer.getRecords("./src/test/resources/StateCensusData.csv");
         Assert.assertEquals(29, result);
+    }
+
+    @Test
+    public void givenStatesCensusCSVFile_WhenImproper_ThenReturnFileNotFoundException() {
+        try {
+            result = censusAnalyzer.getRecords("./src/test/resources/StateCensusDat.csv");
+        } catch (StateAnalyzerException e) {
+            Assert.assertEquals(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, e.type);
+        }
     }
 }

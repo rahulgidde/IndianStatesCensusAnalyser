@@ -2,17 +2,16 @@ package com.bridgelab;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
 public class CensusAnalyzer {
-
-    private static final String CSV_FILE_PATH = "./src/test/resources/StateCensusData.csv";
-
     ///METHOD TO LOAD THE CSV FILE AND GET RECORDS
-    public int getRecords() {
+    public int getRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
         int numberOfRecords = 0;
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
             CsvToBean<CSVStatesCensus> csvToBean = new CsvToBeanBuilder(reader)
@@ -29,7 +28,8 @@ public class CensusAnalyzer {
                 System.out.println("-----------------------------");
                 numberOfRecords++;
             }
-
+        } catch (NoSuchFileException e) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (Exception e) {
             e.printStackTrace();
         }
