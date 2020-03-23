@@ -3,6 +3,7 @@ package com.bridgelab;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+import java.io.File;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -10,9 +11,15 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 
 public class CensusAnalyzer {
+
     ///METHOD TO LOAD THE CSV FILE AND GET RECORDS
     public int getRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
         int numberOfRecords = 0;
+        String extension = getFileExtension(new File(CSV_FILE_PATH));
+        if (extension.compareTo("csv") != 0) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
+                    "Invalid file extension");
+        }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
             CsvToBean<CSVStatesCensus> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVStatesCensus.class)
@@ -34,6 +41,15 @@ public class CensusAnalyzer {
             e.printStackTrace();
         }
         return numberOfRecords;
+    }
+
+    //METHOD TO GET FILE EXTENSION
+    public String getFileExtension(File file) {
+        String fileExtension = "";
+        // GET FILE NAME FIRST
+        String fileName = file.getName();
+        fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        return fileExtension;
     }
 
     //MAIN METHOD
