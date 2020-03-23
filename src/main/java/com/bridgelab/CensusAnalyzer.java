@@ -47,7 +47,7 @@ public class CensusAnalyzer {
         return numberOfRecords;
     }
 
-    public int getStateCodeRecords(String CSV_FILE_PATH) {
+    public int getStateCodeRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
 
         //METHOD TO LOAD THE CSV FILE AND GET RECORDS
         int numberOfRecords = 0;
@@ -67,9 +67,12 @@ public class CensusAnalyzer {
                 System.out.println("-----------------------------");
                 numberOfRecords++;
             }
+        } catch (NoSuchFileException e) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return numberOfRecords;
     }
 
