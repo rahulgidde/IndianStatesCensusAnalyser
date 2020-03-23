@@ -83,4 +83,13 @@ public class StateCensusAnalyzerTest {
             Assert.assertEquals(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER, e.type);
         }
     }
+
+    @Test
+    public void givenWrongStatesCodeCSVFile_WhenIncorrectHeader_ThenReturnWrongHeaderException() {
+        try {
+            result = censusAnalyzer.getStateCensusRecords("./src/test/resources/WrongStateCensusData.csv");
+        } catch (StateAnalyzerException e) {
+            Assert.assertEquals(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER, e.type);
+        }
+    }
 }
