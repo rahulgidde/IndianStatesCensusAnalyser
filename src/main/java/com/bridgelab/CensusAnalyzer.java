@@ -74,10 +74,12 @@ public class CensusAnalyzer {
             }
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
+        } catch (RuntimeException e) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER,
+                    "Wrong Delimiter Or Header");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return numberOfRecords;
     }
 

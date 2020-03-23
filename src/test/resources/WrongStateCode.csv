@@ -1,0 +1,38 @@
+SrNo,state,Name,TIN,StateCode
+1,Andaman,Nicobar Islands,35,AN
+2,Andhra@Pradesh,28,AP
+3,Andhra,Pradesh New,37,AD
+4,Arunachal,Pradesh,12,AR
+5,Assam,Pradesh,18,AS
+6,Bihar,Patna,10,BH
+7,Chandigarh,Patna,04,CH
+8,Chattisgarh,xyz,22,CT
+9,Dadra ,Nagar Haveli,26,DN
+10,Daman ,Diu,25,DD
+11,Delhi,Delhi,07,DL
+12,Goa,Goa,30,GA
+13,Gujarat,Gujarat,24,GJ
+14,Haryana,Panjab,06,HR
+15,Himachal,Pradesh,02,HP
+16,Jammu,Kashmir,01,JK
+17,Jharkhand,abc,20,JH
+18,Karnataka,Banglor,29,KA
+19,Kerala,adc,32,KL
+20,Lakshadweep,Islands,31,LD
+21,Madhya ,Pradesh,23,MP
+22,Maharashtra,Mumbai,27,MH
+23,Manipur,Mizoram,14,MN
+24,Meghalaya,ASD,17,ME
+25,Mizoram,xyz,15,MI
+26,Nagaland,acz,13,NL
+27,Odisha,asf,21,OR
+28,Pondicherry,aas,34,PY
+29,Punjab,Hariyana,03,PB
+30,Rajasthan,aa,08,RJ
+31,Sikkim,saaa,11,SK
+32,Tamil,Nadu,33,TN
+33,Telangana,xyz,36,TS
+34,Tripura,xyz,16,TR
+35,Uttar Pradesh,xyz,09,UP
+36,Uttarakhand,xyz,05,UT
+37,West Bengal,asd,19,WB
