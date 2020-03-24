@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.stream.StreamSupport;
 
 public class CensusAnalyzer {
 
@@ -22,11 +23,8 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCensus> codeAnalyzerIterator = this.getCSVIterator(reader, CSVStatesCensus.class);
-            while (codeAnalyzerIterator.hasNext()) {
-                CSVStatesCensus csvStates = codeAnalyzerIterator.next();
-                numberOfRecords++;
-            }
+            Iterator<CSVStatesCensus> censusAnalyserIterator = this.getCSVIterator(reader, CSVStatesCensus.class);
+            return this.getCount(censusAnalyserIterator);
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (RuntimeException e) {
@@ -48,11 +46,8 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCode> codeAnalyzerIterator = this.getCSVIterator(reader, CSVStatesCode.class);
-            while (codeAnalyzerIterator.hasNext()) {
-                CSVStatesCode csvStates = codeAnalyzerIterator.next();
-                numberOfRecords++;
-            }
+            Iterator<CSVStatesCode> censusAnalyserIterator = this.getCSVIterator(reader, CSVStatesCode.class);
+            return this.getCount(censusAnalyserIterator);
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (RuntimeException e) {
@@ -62,6 +57,13 @@ public class CensusAnalyzer {
             e.printStackTrace();
         }
         return numberOfRecords;
+    }
+
+    //METHOD TO GET NUMBER OF RECORD COUNT
+    private int getCount(Iterator iterator) {
+        Iterable iterable = () -> iterator;
+        int count = (int) StreamSupport.stream(iterable.spliterator(), false).count();
+        return count;
     }
 
     //METHOD TO GET CSV ITERATOR
