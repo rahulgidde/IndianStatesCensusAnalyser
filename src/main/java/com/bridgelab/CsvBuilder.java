@@ -2,13 +2,12 @@ package com.bridgelab;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-
 import java.io.Reader;
 import java.util.Iterator;
 
-public class CsvIterator {
+public class CsvBuilder implements IcsvBuilder {
     //METHOD TO GET CSV ITERATOR
-    <E> Iterator<E> getCSVIterator(Reader reader, Class<E> csvClass) {
+    public <E> Iterator<E> getCSVFileIterator(Reader reader, Class<E> csvClass) {
         CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder(reader);
         csvToBeanBuilder.withType(csvClass);
         csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);

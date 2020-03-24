@@ -20,8 +20,8 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCensus> censusAnalyserIterator = new CsvIterator().getCSVIterator(reader, CSVStatesCensus.class);
-            return this.getCount(censusAnalyserIterator);
+            Iterator<CSVStatesCensus> censusCSVIterator = new CsvBuilder().getCSVFileIterator(reader, CSVStatesCensus.class);
+            return this.getCount(censusCSVIterator);
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (RuntimeException e) {
@@ -43,8 +43,8 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCode> censusAnalyserIterator = new CsvIterator().getCSVIterator(reader, CSVStatesCode.class);
-            return this.getCount(censusAnalyserIterator);
+            Iterator<CSVStatesCode> censusCSVIterator = new CsvBuilder().getCSVFileIterator(reader, CSVStatesCode.class);
+            return this.getCount(censusCSVIterator);
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (RuntimeException e) {
