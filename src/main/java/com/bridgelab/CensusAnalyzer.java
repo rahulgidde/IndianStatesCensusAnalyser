@@ -22,9 +22,18 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCensus> codeAnalyzerIterator = this.getCSVIterator(reader, CSVStatesCensus.class);
-            while (codeAnalyzerIterator.hasNext()) {
-                CSVStatesCensus csvStates = codeAnalyzerIterator.next();
+            CsvToBean<CSVStatesCensus> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(CSVStatesCensus.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+            Iterator<CSVStatesCensus> csvStateCensusIterator = csvToBean.iterator();
+            while (csvStateCensusIterator.hasNext()) {
+                CSVStatesCensus csvStateCensus = csvStateCensusIterator.next();
+                System.out.println("State: " + csvStateCensus.getState());
+                System.out.println("population: " + csvStateCensus.getPopulation());
+                System.out.println("area: " + csvStateCensus.getAreaInSqKm());
+                System.out.println("Density: " + csvStateCensus.getDensityPerSqKm());
+                System.out.println("-----------------------------");
                 numberOfRecords++;
             }
         } catch (NoSuchFileException e) {
@@ -32,7 +41,7 @@ public class CensusAnalyzer {
         } catch (RuntimeException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER,
                     "Wrong Delimiter Or Header");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return numberOfRecords;
@@ -48,9 +57,19 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCode> codeAnalyzerIterator = this.getCSVIterator(reader, CSVStatesCode.class);
-            while (codeAnalyzerIterator.hasNext()) {
-                CSVStatesCode csvStates = codeAnalyzerIterator.next();
+            CsvToBean<CSVStatesCode> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(CSVStatesCode.class)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+            Iterator<CSVStatesCode> csvStatesCodeIterator = csvToBean.iterator();
+            while (csvStatesCodeIterator.hasNext()) {
+                CSVStatesCode csvStatesCode = csvStatesCodeIterator.next();
+                System.out.println("SR.NO: " + csvStatesCode.getSrNo());
+                System.out.println("State: " + csvStatesCode.getState());
+                System.out.println("Name: " + csvStatesCode.getName());
+                System.out.println("TIN: " + csvStatesCode.getTIN());
+                System.out.println("StateCode: " + csvStatesCode.getStateCode());
+                System.out.println("-----------------------------");
                 numberOfRecords++;
             }
         } catch (NoSuchFileException e) {
@@ -62,15 +81,6 @@ public class CensusAnalyzer {
             e.printStackTrace();
         }
         return numberOfRecords;
-    }
-
-    //METHOD TO GET CSV ITERATOR
-    private <E> Iterator<E> getCSVIterator(Reader reader, Class<E> csvClass) {
-        CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder(reader);
-        csvToBeanBuilder.withType(csvClass);
-        csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-        CsvToBean<E> csvToBean = csvToBeanBuilder.build();
-        return csvToBean.iterator();
     }
 
     //METHOD TO GET FILE EXTENSION

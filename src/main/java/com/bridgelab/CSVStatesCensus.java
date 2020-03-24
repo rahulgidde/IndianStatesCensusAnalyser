@@ -2,7 +2,7 @@ package com.bridgelab;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class CSVStatesCensus {
+public class CSVStatesCensus extends CSVStatesCode {
     @CsvBindByName(column = "State", required = true)
     public String state;
 
@@ -15,17 +15,17 @@ public class CSVStatesCensus {
     @CsvBindByName(column = "DensityPerSqKm", required = true)
     public String densityPerSqKm;
 
-
     @Override
     public String toString() {
-        return "CSVStatesCensus{" +
-                "state='" + state + '\'' +
-                ", population='" + population + '\'' +
-                ", areaInSqKm='" + areaInSqKm + '\'' +
-                ", densityPerSqKm='" + densityPerSqKm + '\'' +
+        return "com.bridgelabz.censusanalyserproject.IndiaCensusCSV {" +
+                "State='" + state + '\'' +
+                " ,Population='" + population + '\'' +
+                " ,AreaInSqKm='" + areaInSqKm + '\'' +
+                " ,DensityPerSqKm='" + densityPerSqKm + '\'' +
                 '}';
     }
 
+    //GETTER AND SETTER
     public String getState() {
         return state;
     }
