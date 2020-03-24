@@ -1,8 +1,5 @@
 package com.bridgelab;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
@@ -23,7 +20,7 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCensus> censusAnalyserIterator = this.getCSVIterator(reader, CSVStatesCensus.class);
+            Iterator<CSVStatesCensus> censusAnalyserIterator = new CsvIterator().getCSVIterator(reader, CSVStatesCensus.class);
             return this.getCount(censusAnalyserIterator);
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
@@ -46,7 +43,7 @@ public class CensusAnalyzer {
                     "Invalid file extension");
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
-            Iterator<CSVStatesCode> censusAnalyserIterator = this.getCSVIterator(reader, CSVStatesCode.class);
+            Iterator<CSVStatesCode> censusAnalyserIterator = new CsvIterator().getCSVIterator(reader, CSVStatesCode.class);
             return this.getCount(censusAnalyserIterator);
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
@@ -64,15 +61,6 @@ public class CensusAnalyzer {
         Iterable iterable = () -> iterator;
         int count = (int) StreamSupport.stream(iterable.spliterator(), false).count();
         return count;
-    }
-
-    //METHOD TO GET CSV ITERATOR
-    private <E> Iterator<E> getCSVIterator(Reader reader, Class<E> csvClass) {
-        CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder(reader);
-        csvToBeanBuilder.withType(csvClass);
-        csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
-        CsvToBean<E> csvToBean = csvToBeanBuilder.build();
-        return csvToBean.iterator();
     }
 
     //METHOD TO GET FILE EXTENSION
