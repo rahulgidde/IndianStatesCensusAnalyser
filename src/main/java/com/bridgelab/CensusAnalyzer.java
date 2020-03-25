@@ -39,9 +39,8 @@ public class CensusAnalyzer {
         return 0;
     }
 
+    //TO METHOD LOAD THE CSV FILE AND GET RECORDS
     public int getStateCodeRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
-
-        //METHOD TO LOAD THE CSV FILE AND GET RECORDS
         String extension = getFileExtension(new File(CSV_FILE_PATH));
         if (extension.compareTo("csv") != 0) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
