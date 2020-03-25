@@ -94,4 +94,15 @@ public class StateCensusAnalyzerTest {
             Assert.assertEquals(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER, e.type);
         }
     }
+
+    @Test
+    public void givenStateCensusCsvFile_WhenSortedOnState_ThenReturnSortedFirstResult() {
+        try {
+            String sortedCensusData = censusAnalyzer.getSortedCensusData("./src/test/resources/StateCensusData.csv");
+            CSVStatesCensus[] censuses = new Gson().fromJson(sortedCensusData, CSVStatesCensus[].class);
+            Assert.assertEquals("Andhra Pradesh", censuses[0].state);
+        } catch (StateAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
 }
