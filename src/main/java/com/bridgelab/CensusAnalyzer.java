@@ -2,6 +2,7 @@ package com.bridgelab;
 
 import Exception.CsvBuilderException;
 import Exception.StateAnalyzerException;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,22 +10,26 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+
 public class CensusAnalyzer {
 
+    List<CSVStatesCensus> csvFileList = null;
+
     //METHOD TO LOAD THE CSV FILE AND GET RECORDS
-    public int getStateCensusRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
-        String extension = getFileExtension(new File(CSV_FILE_PATH));
+    public int loadIndianCensusData(String csvFilePath) throws StateAnalyzerException {
+        String extension = getFileExtension(new File(csvFilePath));
         if (extension.compareTo("csv") != 0) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
                     "Invalid file extension");
         }
-        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
-            List<CSVStatesCensus> csvFileList = csvBuilder.getCSVFileList(reader, CSVStatesCensus.class);
+            csvFileList = csvBuilder.getCSVFileList(reader, CSVStatesCensus.class);
             return csvFileList.size();
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
@@ -40,13 +45,13 @@ public class CensusAnalyzer {
     }
 
     //TO METHOD LOAD THE CSV FILE AND GET RECORDS
-    public int getStateCodeRecords(String CSV_FILE_PATH) throws StateAnalyzerException {
-        String extension = getFileExtension(new File(CSV_FILE_PATH));
+    public int loadIndianStateCodeData(String csvFilePath) throws StateAnalyzerException {
+        String extension = getFileExtension(new File(csvFilePath));
         if (extension.compareTo("csv") != 0) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
                     "Invalid file extension");
         }
-        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
             List<CSVStatesCode> csvFileList = csvBuilder.getCSVFileList(reader, CSVStatesCode.class);
             return csvFileList.size();
@@ -77,5 +82,30 @@ public class CensusAnalyzer {
         String fileName = file.getName();
         fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
         return fileExtension;
+    }
+
+    //METHOD FOR STATE CENSUS COMPARATOR
+    public String getSortedCensusData(String csvFilePath) throws StateAnalyzerException {
+        loadIndianCensusData(csvFilePath);
+        if (csvFileList == null || csvFileList.size() == 0)
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
+        Comparator<CSVStatesCensus> comparator = Comparator.comparing(stateCensus -> stateCensus.getState());
+        this.sort(comparator, csvFileList);
+        String toJson = new Gson().toJson(csvFileList);
+        return toJson;
+    }
+
+    //METHOD FOR SORTING THE STATE CENSUS CSV
+    private <T> void sort(Comparator<CSVStatesCensus> censusComparator, List<CSVStatesCensus> csvFileList) {
+        for (int index1 = 0; index1 < csvFileList.size(); index1++) {
+            for (int index2 = 0; index2 < csvFileList.size() - index1 - 1; index2++) {
+                CSVStatesCensus census1 = csvFileList.get(index2);
+                CSVStatesCensus census2 = csvFileList.get(index2 + 1);
+                if (censusComparator.compare(census1, census2) > 0) {
+                    csvFileList.set(index2, census2);
+                    csvFileList.set(index2 + 1, census1);
+                }
+            }
+        }
     }
 }
