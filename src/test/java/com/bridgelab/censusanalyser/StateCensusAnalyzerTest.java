@@ -1,7 +1,7 @@
 package com.bridgelab.censusanalyser;
 
 import com.bridgelab.CensusAnalyzer;
-import com.bridgelab.StateAnalyzerException;
+import Exception.StateAnalyzerException;
 import org.junit.Assert;
 import org.junit.Test;
 
