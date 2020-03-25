@@ -105,4 +105,15 @@ public class StateCensusAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIndianCensusData_WhenSortedOnState_ShouldReturnLastSortedResult() throws StateAnalyzerException {
+        try {
+            String sortedCensusData = censusAnalyzer.getSortedCensusData("./src/test/resources/StateCensusData.csv");
+            CSVStatesCensus[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStatesCensus[].class);
+            Assert.assertEquals("West Bengal", censusCSV[28].state);
+        } catch (StateAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
 }
