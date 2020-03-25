@@ -42,15 +42,15 @@ public class CSVStatesCode {
     }
 
     public void setState(String state) {
-        this.State = state;
+        State = state;
     }
 
     public String getName() {
         return Name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        Name = name;
     }
 
     public String getTIN() {
@@ -65,7 +65,7 @@ public class CSVStatesCode {
         return StateCode;
     }
 
-    public void setStateCode(String StateCode) {
-        this.StateCode = StateCode;
+    public void setStateCode(String stateCode) {
+        StateCode = stateCode;
     }
 }
