@@ -1,8 +1,8 @@
 package com.bridgelab.censusanalyser;
 
-import com.bridgelab.CSVStatesCensus;
-import com.bridgelab.CensusAnalyzer;
-import Exception.StateAnalyzerException;
+import com.bridgelab.censusanalyzer.CSVStatesCensus;
+import com.bridgelab.censusanalyzer.CensusAnalyzer;
+import com.bridgelab.exception.StateAnalyzerException;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
@@ -114,7 +114,6 @@ public class StateCensusAnalyzerTest {
             Assert.assertEquals("West Bengal", censusCSV[28].state);
         } catch (StateAnalyzerException e) {
             e.printStackTrace();
-
         }
     }
 }

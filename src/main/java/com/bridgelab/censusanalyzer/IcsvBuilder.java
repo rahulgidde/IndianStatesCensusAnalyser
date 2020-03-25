@@ -1,7 +1,7 @@
-package com.bridgelab;
+package com.bridgelab.censusanalyzer;
 
-import Exception.CsvBuilderException;
-import Exception.StateAnalyzerException;
+import com.bridgelab.exception.CsvBuilderException;
+import com.bridgelab.exception.StateAnalyzerException;
 
 import java.io.Reader;
 import java.util.Iterator;

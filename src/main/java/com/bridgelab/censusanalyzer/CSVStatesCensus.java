@@ -1,4 +1,4 @@
-package com.bridgelab;
+package com.bridgelab.censusanalyzer;
 
 import com.opencsv.bean.CsvBindByName;
 
