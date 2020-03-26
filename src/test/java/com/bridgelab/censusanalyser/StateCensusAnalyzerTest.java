@@ -132,7 +132,7 @@ public class StateCensusAnalyzerTest {
     }
 
     @Test
-    public void givenStateCodeCsvFile_WhenSortedOnState_ThenReturnSortedFirstResult() {
+    public void givenStateCodeCsvFile_WhenSortedOnStateCode_ThenReturnSortedFirstResult() {
         try {
             censusAnalyzer.loadIndianStateCodeData("./src/test/resources/StateCode.csv");
             String sortedCodeData = censusAnalyzer.getSortedCodeData();
@@ -144,7 +144,7 @@ public class StateCensusAnalyzerTest {
     }
 
     @Test
-    public void givenStateCodeCsvFile_WhenSortedOnState_ThenReturnSortedLastResult() {
+    public void givenStateCodeCsvFile_WhenSortedOnStateCode_ThenReturnSortedLastResult() {
         try {
             censusAnalyzer.loadIndianStateCodeData("./src/test/resources/StateCode.csv");
             String sortedCodeData = censusAnalyzer.getSortedCodeData();
@@ -156,7 +156,7 @@ public class StateCensusAnalyzerTest {
     }
 
     @Test
-    public void givenIndianCodeData_WhenImproperFile_ShouldThrowException() {
+    public void givenStateCodeData_WhenImproperFile_ShouldThrowException() {
         try {
             String sortedCodeData = censusAnalyzer.getSortedCodeData();
             CSVStatesCode[] codes = new Gson().fromJson(sortedCodeData, CSVStatesCode[].class);

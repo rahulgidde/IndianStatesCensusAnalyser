@@ -3,6 +3,7 @@ package com.bridgelab.censusanalyzer;
 import com.bridgelab.exception.CsvBuilderException;
 import com.bridgelab.exception.StateAnalyzerException;
 import com.google.gson.Gson;
+import org.apache.commons.collections.map.HashedMap;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,13 +14,22 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 
 public class CensusAnalyzer {
 
     List<CSVStatesCensus> csvFileList = null;
     List<CSVStatesCode> csvCodeFileList = null;
+    Map<String, CSVStatesCensus> censusMap = null;
+    Map<String, CSVStatesCode> codeMap = null;
+
+    //DEFAULT CONSTRUCTOR
+    public CensusAnalyzer() {
+        this.censusMap = new HashedMap();
+        this.codeMap = new HashedMap();
+    }
 
     //METHOD TO LOAD THE CSV FILE AND GET RECORDS
     public int loadIndianCensusData(String csvFilePath) throws StateAnalyzerException {
@@ -30,8 +40,13 @@ public class CensusAnalyzer {
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
-            csvFileList = csvBuilder.getCSVFileList(reader, CSVStatesCensus.class);
-            return csvFileList.size();
+            Iterator<CSVStatesCensus> stateCensusIterator = csvBuilder.getCSVFileIterator(reader, CSVStatesCensus.class);
+            while (stateCensusIterator.hasNext()) {
+                CSVStatesCensus stateCensus = stateCensusIterator.next();
+                this.censusMap.put(stateCensus.getState(), stateCensus);
+                csvFileList = censusMap.values().stream().collect(Collectors.toList());
+            }
+            return censusMap.size();
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (RuntimeException e) {
@@ -54,8 +69,13 @@ public class CensusAnalyzer {
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
-            csvCodeFileList = csvBuilder.getCSVFileList(reader, CSVStatesCode.class);
-            return csvCodeFileList.size();
+            Iterator<CSVStatesCode> statesCodeIterator = csvBuilder.getCSVFileIterator(reader, CSVStatesCode.class);
+            while (statesCodeIterator.hasNext()) {
+                CSVStatesCode stateCode = statesCodeIterator.next();
+                this.codeMap.put(stateCode.getStateCode(), stateCode);
+                csvCodeFileList = codeMap.values().stream().collect(Collectors.toList());
+            }
+            return codeMap.size();
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (RuntimeException e) {
