@@ -1,6 +1,7 @@
 package com.bridgelab.censusanalyser;
 
 import com.bridgelab.censusanalyzer.CSVStatesCensus;
+import com.bridgelab.censusanalyzer.CSVStatesCode;
 import com.bridgelab.censusanalyzer.CensusAnalyzer;
 import com.bridgelab.exception.StateAnalyzerException;
 import com.google.gson.Gson;
@@ -127,6 +128,18 @@ public class StateCensusAnalyzerTest {
             Assert.assertEquals("West Bengal", censusCSV[28].state);
         } catch (StateAnalyzerException e) {
             Assert.assertEquals(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, e.type);
+        }
+    }
+
+    @Test
+    public void givenStateCodeCsvFile_WhenSortedOnState_ThenReturnSortedFirstResult() {
+        try {
+            censusAnalyzer.loadIndianStateCodeData("./src/test/resources/StateCode.csv");
+            String sortedCodeData = censusAnalyzer.getSortedCodeData();
+            CSVStatesCode[] codes = new Gson().fromJson(sortedCodeData, CSVStatesCode[].class);
+            Assert.assertEquals("AD", codes[0].StateCode);
+        } catch (StateAnalyzerException e) {
+            e.printStackTrace();
         }
     }
 }

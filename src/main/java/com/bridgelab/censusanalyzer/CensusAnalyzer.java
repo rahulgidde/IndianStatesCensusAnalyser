@@ -99,17 +99,17 @@ public class CensusAnalyzer {
     public String getSortedCodeData() throws StateAnalyzerException {
         if (csvCodeFileList == null || csvCodeFileList.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
-        Comparator<CSVStatesCode> comparator = Comparator.comparing(CSVStatesCode -> CSVStatesCode.getState());
+        Comparator<CSVStatesCode> comparator = Comparator.comparing(statesCode -> statesCode.getStateCode());
         this.sort(comparator, csvCodeFileList);
         String toJson = new Gson().toJson(csvCodeFileList);
         return toJson;
     }
 
-    //METHOD FOR SORTING THE STATE CENSUS CSV
+    //METHOD FOR SORTING THE INDIAN STATES CENSUS DATA
     private <T> void sort(Comparator<T> csvComparator, List<T> csvList) {
         for (int index1 = 0; index1 < csvList.size() - 1; index1++) {
             for (int index2 = 0; index2 < csvList.size() - index1 - 1; index2++) {
-                T census1 = csvList.get(index1);
+                T census1 = csvList.get(index2);
                 T census2 = csvList.get(index2 + 1);
                 if (csvComparator.compare(census1, census2) > 0) {
                     csvList.set(index2, census2);
