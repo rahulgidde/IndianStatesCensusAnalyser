@@ -142,4 +142,16 @@ public class StateCensusAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenStateCodeCsvFile_WhenSortedOnState_ThenReturnSortedLastResult() {
+        try {
+            censusAnalyzer.loadIndianStateCodeData("./src/test/resources/StateCode.csv");
+            String sortedCodeData = censusAnalyzer.getSortedCodeData();
+            CSVStatesCode[] codes = new Gson().fromJson(sortedCodeData, CSVStatesCode[].class);
+            Assert.assertEquals("WB", codes[36].StateCode);
+        } catch (StateAnalyzerException e) {
+            e.printStackTrace();
+        }
+    }
 }
