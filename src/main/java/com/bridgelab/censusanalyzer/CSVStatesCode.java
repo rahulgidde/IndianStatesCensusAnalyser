@@ -4,31 +4,21 @@ import com.opencsv.bean.CsvBindByName;
 
 public class CSVStatesCode {
     @CsvBindByName(column = "SrNo", required = true)
-    public String SrNo;
+    private String SrNo;
 
     @CsvBindByName(column = "State", required = true)
-    public String State;
+    private String State;
 
     @CsvBindByName(column = "Name", required = true)
-    public String Name;
+    private String Name;
 
     @CsvBindByName(column = "TIN", required = true)
-    public String TIN;
+    private String TIN;
 
     @CsvBindByName(column = "StateCode", required = true)
-    public String StateCode;
+    private String StateCode;
 
-    @Override
-    public String toString() {
-        return "CSVStates{" +
-                "SrNo='" + SrNo + '\'' +
-                ", state='" + State + '\'' +
-                ", population='" + Name + '\'' +
-                ", areaInSqKm='" + TIN + '\'' +
-                ", densityPerSqKm='" + StateCode + '\'' +
-                '}';
-    }
-
+    //GETTER AND SETTER
     public String getSrNo() {
         return SrNo;
     }
@@ -67,5 +57,16 @@ public class CSVStatesCode {
 
     public void setStateCode(String stateCode) {
         StateCode = stateCode;
+    }
+
+    @Override
+    public String toString() {
+        return "CSVStates{" +
+                "SrNo='" + SrNo + '\'' +
+                ", state='" + State + '\'' +
+                ", population='" + Name + '\'' +
+                ", areaInSqKm='" + TIN + '\'' +
+                ", densityPerSqKm='" + StateCode + '\'' +
+                '}';
     }
 }
