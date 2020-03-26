@@ -85,8 +85,7 @@ public class CensusAnalyzer {
     }
 
     //METHOD FOR STATE CENSUS COMPARATOR
-    public String getSortedCensusData(String csvFilePath) throws StateAnalyzerException {
-        loadIndianCensusData(csvFilePath);
+    public String getSortedCensusData() throws StateAnalyzerException {
         if (csvFileList == null || csvFileList.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
         Comparator<CSVStatesCensus> comparator = Comparator.comparing(stateCensus -> stateCensus.getState());
