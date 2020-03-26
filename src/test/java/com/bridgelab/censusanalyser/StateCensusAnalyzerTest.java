@@ -154,4 +154,15 @@ public class StateCensusAnalyzerTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void givenIndianCodeData_WhenImproperFile_ShouldThrowException() {
+        try {
+            String sortedCodeData = censusAnalyzer.getSortedCodeData();
+            CSVStatesCode[] codes = new Gson().fromJson(sortedCodeData, CSVStatesCode[].class);
+            Assert.assertEquals("WB", codes[36].StateCode);
+        } catch (StateAnalyzerException e) {
+            Assert.assertEquals(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, e.type);
+        }
+    }
 }
