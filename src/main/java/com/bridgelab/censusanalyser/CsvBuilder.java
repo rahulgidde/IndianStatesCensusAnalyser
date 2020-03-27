@@ -1,4 +1,4 @@
-package com.bridgelab.censusanalyzer;
+package com.bridgelab.censusanalyser;
 
 import com.bridgelab.exception.StateAnalyzerException;
 import com.opencsv.bean.CsvToBean;

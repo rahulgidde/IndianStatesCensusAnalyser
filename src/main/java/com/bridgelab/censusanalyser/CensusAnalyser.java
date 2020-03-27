@@ -1,4 +1,4 @@
-package com.bridgelab.censusanalyzer;
+package com.bridgelab.censusanalyser;
 
 import com.bridgelab.exception.CsvBuilderException;
 import com.bridgelab.exception.StateAnalyzerException;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class CensusAnalyzer {
+public class CensusAnalyser {
 
     List<CSVStatesCensus> csvFileList = null;
     List<CSVStatesCode> csvCodeFileList = null;
@@ -26,7 +26,7 @@ public class CensusAnalyzer {
     Map<String, CSVStatesCode> codeMap;
 
     //DEFAULT CONSTRUCTOR
-    public CensusAnalyzer() {
+    public CensusAnalyser() {
         this.censusMap = new HashedMap();
         this.codeMap = new HashedMap();
     }
