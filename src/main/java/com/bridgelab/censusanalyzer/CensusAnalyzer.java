@@ -22,8 +22,8 @@ public class CensusAnalyzer {
 
     List<CSVStatesCensus> csvFileList = null;
     List<CSVStatesCode> csvCodeFileList = null;
-    Map<String, CSVStatesCensus> censusMap = null;
-    Map<String, CSVStatesCode> codeMap = null;
+    Map<String, CSVStatesCensus> censusMap;
+    Map<String, CSVStatesCode> codeMap;
 
     //DEFAULT CONSTRUCTOR
     public CensusAnalyzer() {
@@ -32,7 +32,7 @@ public class CensusAnalyzer {
     }
 
     //METHOD TO LOAD THE CSV FILE AND GET RECORDS
-    public int loadIndianCensusData(String csvFilePath) throws StateAnalyzerException {
+    public <T> int loadCensusData(String csvFilePath, Class<T> className) throws StateAnalyzerException {
         String extension = getFileExtension(new File(csvFilePath));
         if (extension.compareTo("csv") != 0) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
@@ -40,42 +40,23 @@ public class CensusAnalyzer {
         }
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
             IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
-            Iterator<CSVStatesCensus> stateCensusIterator = csvBuilder.getCSVFileIterator(reader, CSVStatesCensus.class);
-            while (stateCensusIterator.hasNext()) {
-                CSVStatesCensus stateCensus = stateCensusIterator.next();
-                this.censusMap.put(stateCensus.getState(), stateCensus);
-                csvFileList = censusMap.values().stream().collect(Collectors.toList());
+            Iterator<T> stateCensusIterator = csvBuilder.getCSVFileIterator(reader, className);
+            if (className.getName().contains("CSVStatesCensus")) {
+                while (stateCensusIterator.hasNext()) {
+                    CSVStatesCensus stateCensus = (CSVStatesCensus) stateCensusIterator.next();
+                    this.censusMap.put(stateCensus.getState(), stateCensus);
+                    csvFileList = censusMap.values().stream().collect(Collectors.toList());
+                }
+                return csvFileList.size();
             }
-            return censusMap.size();
-        } catch (NoSuchFileException e) {
-            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
-        } catch (RuntimeException e) {
-            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER,
-                    "Wrong Delimiter Or Header");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CsvBuilderException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    //TO METHOD LOAD THE CSV FILE AND GET RECORDS
-    public int loadIndianStateCodeData(String csvFilePath) throws StateAnalyzerException {
-        String extension = getFileExtension(new File(csvFilePath));
-        if (extension.compareTo("csv") != 0) {
-            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
-                    "Invalid file extension");
-        }
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
-            IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
-            Iterator<CSVStatesCode> statesCodeIterator = csvBuilder.getCSVFileIterator(reader, CSVStatesCode.class);
-            while (statesCodeIterator.hasNext()) {
-                CSVStatesCode stateCode = statesCodeIterator.next();
-                this.codeMap.put(stateCode.getStateCode(), stateCode);
-                csvCodeFileList = codeMap.values().stream().collect(Collectors.toList());
+            if (className.getName().contains("CSVStatesCode")) {
+                while (stateCensusIterator.hasNext()) {
+                    CSVStatesCode stateCensus = (CSVStatesCode) stateCensusIterator.next();
+                    this.codeMap.put(stateCensus.getStateCode(), stateCensus);
+                    csvCodeFileList = codeMap.values().stream().collect(Collectors.toList());
+                }
+                return csvCodeFileList.size();
             }
-            return codeMap.size();
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
         } catch (RuntimeException e) {
