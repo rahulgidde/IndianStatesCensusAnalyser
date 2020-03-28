@@ -4,7 +4,7 @@ import com.opencsv.bean.CsvBindByName;
 
 public class CSVStatesCode {
     @CsvBindByName(column = "SrNo", required = true)
-    private String SrNo;
+    private int SrNo;
 
     @CsvBindByName(column = "State", required = true)
     private String State;
@@ -19,11 +19,11 @@ public class CSVStatesCode {
     private String StateCode;
 
     //GETTER AND SETTER
-    public String getSrNo() {
+    public int getSrNo() {
         return SrNo;
     }
 
-    public void setSrNo(String srNo) {
+    public void setSrNo(int srNo) {
         SrNo = srNo;
     }
 

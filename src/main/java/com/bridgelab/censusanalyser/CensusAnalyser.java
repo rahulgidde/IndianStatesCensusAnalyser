@@ -19,14 +19,12 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyser {
 
     List<CensusDAO> csvFileList = null;
-    List<CSVStatesCode> csvCodeFileList = null;
-    Map<String, CensusDAO> censusMap;
-    Map<String, CSVStatesCode> codeMap;
+    Map<String, CensusDAO> censusMap = null;
 
     //DEFAULT CONSTRUCTOR
     public CensusAnalyser() {
+        this.csvFileList = new ArrayList<>();
         this.censusMap = new HashedMap();
-        this.codeMap = new HashedMap();
     }
 
     //METHOD TO LOAD THE CSV FILE AND GET RECORDS
@@ -47,12 +45,11 @@ public class CensusAnalyser {
                 return csvFileList.size();
             }
             if (className.getName().contains("CSVStatesCode")) {
-                while (stateCensusIterator.hasNext()) {
-                    CSVStatesCode stateCensus = (CSVStatesCode) stateCensusIterator.next();
-                    this.codeMap.put(stateCensus.getStateCode(), stateCensus);
-                    csvCodeFileList = codeMap.values().stream().collect(Collectors.toList());
-                }
-                return csvCodeFileList.size();
+                Iterable<CSVStatesCode> statesCodes = () -> (Iterator<CSVStatesCode>) stateCensusIterator;
+                StreamSupport.stream(statesCodes.spliterator(), false)
+                        .forEach(csvStatesCode -> censusMap.put(csvStatesCode.getStateCode(), new CensusDAO(csvStatesCode)));
+                csvFileList = censusMap.values().stream().collect(Collectors.toList());
+                return csvFileList.size();
             }
         } catch (NoSuchFileException e) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
@@ -121,11 +118,11 @@ public class CensusAnalyser {
 
     //METHOD FOR STATE CODE COMPARATOR
     public String getSortedCodeData() throws StateAnalyzerException {
-        if (csvCodeFileList == null || csvCodeFileList.size() == 0)
+        if (csvFileList == null || csvFileList.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
-        Comparator<CSVStatesCode> comparator = Comparator.comparing(statesCode -> statesCode.getStateCode());
-        this.sort(comparator, csvCodeFileList);
-        String toJson = new Gson().toJson(csvCodeFileList);
+        Comparator<CensusDAO> comparator = Comparator.comparing(stateCensus -> stateCensus.stateCode);
+        this.sort(comparator, csvFileList);
+        String toJson = new Gson().toJson(csvFileList);
         return toJson;
     }
 

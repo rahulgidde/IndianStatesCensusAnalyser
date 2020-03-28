@@ -134,8 +134,8 @@ public class StateCensusAnalyzerTest {
         try {
             censusAnalyzer.loadCensusData("./src/test/resources/StateCode.csv", CSVStatesCode.class);
             String sortedCodeData = censusAnalyzer.getSortedCodeData();
-            CSVStatesCode[] codes = new Gson().fromJson(sortedCodeData, CSVStatesCode[].class);
-            Assert.assertEquals("AD", codes[0].getStateCode());
+            CensusDAO[] codes = new Gson().fromJson(sortedCodeData, CensusDAO[].class);
+            Assert.assertEquals("AD", codes[0].stateCode);
         } catch (StateAnalyzerException e) {
             e.printStackTrace();
         }
@@ -146,8 +146,8 @@ public class StateCensusAnalyzerTest {
         try {
             censusAnalyzer.loadCensusData("./src/test/resources/StateCode.csv", CSVStatesCode.class);
             String sortedCodeData = censusAnalyzer.getSortedCodeData();
-            CSVStatesCode[] codes = new Gson().fromJson(sortedCodeData, CSVStatesCode[].class);
-            Assert.assertEquals("WB", codes[36].getStateCode());
+            CensusDAO[] codes = new Gson().fromJson(sortedCodeData, CensusDAO[].class);
+            Assert.assertEquals("WB", codes[36].stateCode);
         } catch (StateAnalyzerException e) {
             e.printStackTrace();
         }
@@ -157,8 +157,8 @@ public class StateCensusAnalyzerTest {
     public void givenStateCodeData_WhenImproperFile_ShouldThrowException() {
         try {
             String sortedCodeData = censusAnalyzer.getSortedCodeData();
-            CSVStatesCode[] codes = new Gson().fromJson(sortedCodeData, CSVStatesCode[].class);
-            Assert.assertEquals("WB", codes[36].getStateCode());
+            CensusDAO[] codes = new Gson().fromJson(sortedCodeData, CensusDAO[].class);
+            Assert.assertEquals("WB", codes[36]);
         } catch (StateAnalyzerException e) {
             Assert.assertEquals(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, e.type);
         }
