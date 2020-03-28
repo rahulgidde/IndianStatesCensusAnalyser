@@ -1,7 +1,7 @@
-package com.bridgelab.dao;
+package com.bridgelab.sensusanalyser.dao;
 
-import com.bridgelab.censusanalyser.CSVStatesCensus;
-import com.bridgelab.censusanalyser.CSVStatesCode;
+import com.bridgelab.sensusanalyser.dto.CSVStatesCensus;
+import com.bridgelab.sensusanalyser.dto.CSVStatesCode;
 
 public class CensusDAO {
     public String state;

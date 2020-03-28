@@ -1,6 +1,6 @@
-package com.bridgelab.censusanalyser;
+package com.bridgelab.sensusanalyser.adapter;
 
-import com.bridgelab.exception.StateAnalyzerException;
+import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 

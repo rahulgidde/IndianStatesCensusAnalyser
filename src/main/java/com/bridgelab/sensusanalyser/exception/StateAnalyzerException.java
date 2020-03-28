@@ -1,4 +1,4 @@
-package com.bridgelab.exception;
+package com.bridgelab.sensusanalyser.exception;
 
 public class StateAnalyzerException extends Throwable {
 
