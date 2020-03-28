@@ -1,5 +1,6 @@
 package com.bridgelab.censusanalyser;
 
+import com.bridgelab.dao.CensusDAO;
 import com.bridgelab.exception.StateAnalyzerException;
 import com.google.gson.Gson;
 import org.junit.Assert;
@@ -98,8 +99,8 @@ public class StateCensusAnalyzerTest {
         try {
             censusAnalyzer.loadCensusData("./src/test/resources/StateCensusData.csv", CSVStatesCensus.class);
             String sortedCensusData = censusAnalyzer.getSortedCensusData();
-            CSVStatesCensus[] censuses = new Gson().fromJson(sortedCensusData, CSVStatesCensus[].class);
-            Assert.assertEquals("Andhra Pradesh", censuses[0].getState());
+            CensusDAO[] censuses = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals("Andhra Pradesh", censuses[0].state);
         } catch (StateAnalyzerException e) {
             e.printStackTrace();
         }
@@ -110,8 +111,8 @@ public class StateCensusAnalyzerTest {
         try {
             censusAnalyzer.loadCensusData("./src/test/resources/StateCensusData.csv", CSVStatesCensus.class);
             String sortedCensusData = censusAnalyzer.getSortedCensusData();
-            CSVStatesCensus[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStatesCensus[].class);
-            Assert.assertEquals("West Bengal", censusCSV[28].getState());
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals("West Bengal", censusCSV[28].state);
         } catch (StateAnalyzerException e) {
             e.printStackTrace();
         }
@@ -121,8 +122,8 @@ public class StateCensusAnalyzerTest {
     public void givenIndianCensusData_WhenImproperFile_ShouldThrowException() {
         try {
             String sortedCensusData = censusAnalyzer.getSortedCensusData();
-            CSVStatesCensus[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStatesCensus[].class);
-            Assert.assertEquals("West Bengal", censusCSV[28].getState());
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals("West Bengal", censusCSV[28].state);
         } catch (StateAnalyzerException e) {
             Assert.assertEquals(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, e.type);
         }

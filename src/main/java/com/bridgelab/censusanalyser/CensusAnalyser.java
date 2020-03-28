@@ -1,5 +1,6 @@
 package com.bridgelab.censusanalyser;
 
+import com.bridgelab.dao.CensusDAO;
 import com.bridgelab.exception.CsvBuilderException;
 import com.bridgelab.exception.StateAnalyzerException;
 import com.google.gson.Gson;
@@ -20,9 +21,9 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
 
-    List<CSVStatesCensus> csvFileList = null;
+    List<CensusDAO> csvFileList = null;
     List<CSVStatesCode> csvCodeFileList = null;
-    Map<String, CSVStatesCensus> censusMap;
+    Map<String, CensusDAO> censusMap;
     Map<String, CSVStatesCode> codeMap;
 
     //DEFAULT CONSTRUCTOR
@@ -42,11 +43,10 @@ public class CensusAnalyser {
             IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
             Iterator<T> stateCensusIterator = csvBuilder.getCSVFileIterator(reader, className);
             if (className.getName().contains("CSVStatesCensus")) {
-                while (stateCensusIterator.hasNext()) {
-                    CSVStatesCensus stateCensus = (CSVStatesCensus) stateCensusIterator.next();
-                    this.censusMap.put(stateCensus.getState(), stateCensus);
-                    csvFileList = censusMap.values().stream().collect(Collectors.toList());
-                }
+                Iterable<CSVStatesCensus> stateCensuses = () -> (Iterator<CSVStatesCensus>) stateCensusIterator;
+                StreamSupport.stream(stateCensuses.spliterator(), false)
+                        .forEach(csvStateCensus -> censusMap.put(csvStateCensus.getState(), new CensusDAO(csvStateCensus)));
+                csvFileList = censusMap.values().stream().collect(Collectors.toList());
                 return csvFileList.size();
             }
             if (className.getName().contains("CSVStatesCode")) {
@@ -90,7 +90,7 @@ public class CensusAnalyser {
     public String getSortedCensusData() throws StateAnalyzerException {
         if (csvFileList == null || csvFileList.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
-        Comparator<CSVStatesCensus> comparator = Comparator.comparing(stateCensus -> stateCensus.getState());
+        Comparator<CensusDAO> comparator = Comparator.comparing(stateCensus -> stateCensus.state);
         this.sort(comparator, csvFileList);
         String toJson = new Gson().toJson(csvFileList);
         return toJson;
