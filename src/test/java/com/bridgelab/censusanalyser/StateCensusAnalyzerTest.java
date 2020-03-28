@@ -187,4 +187,16 @@ public class StateCensusAnalyzerTest {
             e.getStackTrace();
         }
     }
+
+    @Test
+    public void givenStateCensusData_WhenSortedOnArea_ShouldReturnSortedResult() {
+        try {
+            censusAnalyzer.loadCensusData("./src/test/resources/StateCensusData.csv", CSVStatesCensus.class);
+            String sortedCensusData = censusAnalyzer.getAreaWiseSortedCensusData();
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals(342239, censusCSV[0].area);
+        } catch (StateAnalyzerException e) {
+            e.getStackTrace();
+        }
+    }
 }

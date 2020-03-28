@@ -108,6 +108,17 @@ public class CensusAnalyser {
         return toJson;
     }
 
+    //METHOD TO SORT STATE CENSUS DATA BY AREA WISE
+    public String getAreaWiseSortedCensusData() throws StateAnalyzerException {
+        if (csvFileList == null || csvFileList.size() == 0)
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
+        Comparator<CensusDAO> comparator = Comparator.comparing(stateCensus -> stateCensus.area);
+        this.sort(comparator, csvFileList);
+        Collections.reverse(csvFileList);
+        String toJson = new Gson().toJson(csvFileList);
+        return toJson;
+    }
+
     //METHOD FOR STATE CODE COMPARATOR
     public String getSortedCodeData() throws StateAnalyzerException {
         if (csvCodeFileList == null || csvCodeFileList.size() == 0)
