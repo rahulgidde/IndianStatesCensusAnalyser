@@ -5,6 +5,7 @@ import com.bridgelab.sensusanalyser.adapter.IcsvBuilder;
 import com.bridgelab.sensusanalyser.dao.CensusDAO;
 import com.bridgelab.sensusanalyser.dto.CSVStatesCensus;
 import com.bridgelab.sensusanalyser.dto.CSVStatesCode;
+import com.bridgelab.sensusanalyser.dto.USCensusCSV;
 import com.bridgelab.sensusanalyser.exception.CsvBuilderException;
 import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
 import com.google.gson.Gson;
@@ -29,6 +30,30 @@ public class CensusAnalyser {
     public CensusAnalyser() {
         this.csvFileList = new ArrayList<>();
         this.censusMap = new HashedMap();
+    }
+
+    //METHOD TO LOAD THE US CENSUS DATA
+    public int loadUSCensusData(String CSV_FILE_PATH) throws StateAnalyzerException {
+        String extension = getFileExtension(new File(CSV_FILE_PATH));
+        if (extension.compareTo("csv") != 0) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
+                    "Invalid file extension");
+        }
+        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
+            IcsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
+            List<USCensusCSV> csvFileList = csvBuilder.getCSVFileList(reader, USCensusCSV.class);
+            return csvFileList.size();
+        } catch (NoSuchFileException e) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.FILE_NOT_FOUND, "File Not Found");
+        } catch (RuntimeException e) {
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.WRONG_DELIMITER_OR_HEADER,
+                    "Wrong Delimiter Or Header");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (CsvBuilderException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     //METHOD TO LOAD THE CSV FILE AND GET RECORDS

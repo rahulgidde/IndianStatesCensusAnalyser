@@ -202,4 +202,10 @@ public class StateCensusAnalyzerTest {
             e.getStackTrace();
         }
     }
+
+    @Test
+    public void givenUSCensusData_WhenNumberOfRecordMatches_ThenReturnNumberOfRecords() throws StateAnalyzerException {
+        result = censusAnalyzer.loadUSCensusData("./src/test/resources/USCensusData.csv");
+        Assert.assertEquals(51, result);
+    }
 }
