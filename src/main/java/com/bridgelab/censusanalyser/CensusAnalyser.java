@@ -104,6 +104,17 @@ public class CensusAnalyser {
         return toJson;
     }
 
+    //METHOD TO SORT STATE CENSUS DATA BY POPULATION
+    public String getPopulationDensityWiseSortedCensusData() throws StateAnalyzerException {
+        if (csvFileList == null || csvFileList.size() == 0)
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
+        Comparator<CensusDAO> comparator = Comparator.comparing(stateCensus -> stateCensus.density);
+        this.sort(comparator, csvFileList);
+        Collections.reverse(csvFileList);
+        String toJson = new Gson().toJson(csvFileList);
+        return toJson;
+    }
+
     //METHOD FOR STATE CODE COMPARATOR
     public String getSortedCodeData() throws StateAnalyzerException {
         if (csvCodeFileList == null || csvCodeFileList.size() == 0)
@@ -114,7 +125,7 @@ public class CensusAnalyser {
         return toJson;
     }
 
-    //METHOD FOR SORTING THE INDIAN STATES CENSUS DATA
+    //METHOD TO SORT STATE CENSUS DATA BY POPULATION DENSITY
     private <T> void sort(Comparator<T> csvComparator, List<T> csvList) {
         for (int index1 = 0; index1 < csvList.size() - 1; index1++) {
             for (int index2 = 0; index2 < csvList.size() - index1 - 1; index2++) {

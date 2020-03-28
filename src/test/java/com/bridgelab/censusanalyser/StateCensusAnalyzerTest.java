@@ -175,4 +175,16 @@ public class StateCensusAnalyzerTest {
             e.getStackTrace();
         }
     }
+
+    @Test
+    public void givenStateCensusData_WhenSortedOnDensity_ShouldReturnSortedResult() {
+        try {
+            censusAnalyzer.loadCensusData("./src/test/resources/StateCensusData.csv", CSVStatesCensus.class);
+            String sortedCensusData = censusAnalyzer.getPopulationDensityWiseSortedCensusData();
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals(1102, censusCSV[0].density);
+        } catch (StateAnalyzerException e) {
+            e.getStackTrace();
+        }
+    }
 }
