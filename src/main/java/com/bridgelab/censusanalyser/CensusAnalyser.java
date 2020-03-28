@@ -12,10 +12,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -92,6 +89,17 @@ public class CensusAnalyser {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
         Comparator<CensusDAO> comparator = Comparator.comparing(stateCensus -> stateCensus.state);
         this.sort(comparator, csvFileList);
+        String toJson = new Gson().toJson(csvFileList);
+        return toJson;
+    }
+
+    //METHOD TO SORT STATE CENSUS DATA BY POPULATION
+    public String getPopulationWiseSortedCensusData() throws StateAnalyzerException {
+        if (csvFileList == null || csvFileList.size() == 0)
+            throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
+        Comparator<CensusDAO> comparator = Comparator.comparing(stateCensus -> stateCensus.population);
+        this.sort(comparator, csvFileList);
+        Collections.reverse(csvFileList);
         String toJson = new Gson().toJson(csvFileList);
         return toJson;
     }
