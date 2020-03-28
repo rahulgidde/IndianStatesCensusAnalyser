@@ -67,13 +67,6 @@ public class CensusAnalyser {
         return 0;
     }
 
-    //METHOD TO GET COUNT OF RECORDS
-    private <E> int getCount(Iterator<E> iterator) {
-        Iterable<E> iterable = () -> iterator;
-        int recordCount = (int) StreamSupport.stream(iterable.spliterator(), false).count();
-        return recordCount;
-    }
-
     //METHOD TO GET FILE EXTENSION
     public String getFileExtension(File file) {
         String fileExtension = "";
