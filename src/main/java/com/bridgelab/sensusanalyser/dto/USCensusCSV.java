@@ -22,6 +22,14 @@ public class USCensusCSV {
     @CsvBindByName(column = "Population Density", required = true)
     private double densityPerSqKm;
 
+    public USCensusCSV(String stateCode, String state, int population, double areaInSqKm, int population1) {
+        this.stateId = stateId;
+        this.state = state;
+        this.population = population;
+        this.totalArea = totalArea;
+        this.densityPerSqKm = populationDensity;
+    }
+
     public String getStateId() {
         return stateId;
     }

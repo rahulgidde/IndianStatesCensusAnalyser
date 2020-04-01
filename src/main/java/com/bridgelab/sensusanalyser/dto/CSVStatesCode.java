@@ -18,45 +18,24 @@ public class CSVStatesCode {
     @CsvBindByName(column = "StateCode", required = true)
     private String StateCode;
 
-    //GETTER AND SETTER
     public int getSrNo() {
         return SrNo;
-    }
-
-    public void setSrNo(int srNo) {
-        SrNo = srNo;
     }
 
     public String getState() {
         return State;
     }
 
-    public void setState(String state) {
-        State = state;
-    }
-
     public String getName() {
         return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
     }
 
     public String getTIN() {
         return TIN;
     }
 
-    public void setTIN(String TIN) {
-        this.TIN = TIN;
-    }
-
     public String getStateCode() {
         return StateCode;
-    }
-
-    public void setStateCode(String stateCode) {
-        StateCode = stateCode;
     }
 
     @Override

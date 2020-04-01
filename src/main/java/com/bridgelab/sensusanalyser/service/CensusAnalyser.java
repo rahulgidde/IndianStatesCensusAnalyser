@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 
 public class CensusAnalyser {
 
-    Map<String, CensusDAO> censusMap = new HashMap<>();
+    Map<String, CensusDAO> censusMap = null;
+    COUNTRY country;
 
     public enum COUNTRY {
         INDIA, US;
@@ -24,8 +25,13 @@ public class CensusAnalyser {
         this.censusMap = new HashedMap();
     }
 
+    //PARAMETRIZED CONSTRUCTOR
+    public CensusAnalyser(COUNTRY country) {
+        this.country=country;
+    }
+
     //GENERIC METHOD LOADING EVERY FILE DATA
-    public int loadCensusData(COUNTRY country, String... csvFilePath) throws StateAnalyzerException {
+    public int loadCensusData(String... csvFilePath) throws StateAnalyzerException {
         CensusAdapter censusLoader = CensusAdapterFactory.getCensusData(country);
         censusMap = censusLoader.loadCensusData(csvFilePath);
         return censusMap.size();
@@ -56,23 +62,23 @@ public class CensusAnalyser {
         if (censusMap == null || censusMap.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
         Comparator<CensusDAO> censusComparator = Comparator.comparing(censusDAO -> censusDAO.population);
-        List<CensusDAO> censusList = censusMap.values().stream().collect(Collectors.toList());
-        this.sort(censusComparator, censusList);
-        Collections.reverse(censusList);
-        String toJson = new Gson().toJson(censusList);
-        return toJson;
+        ArrayList censusDTO = censusMap.values().stream()
+                .sorted(censusComparator)
+                .map(censusDAO -> censusDAO.getCensusDTO(country))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return new Gson().toJson(censusDTO);
     }
 
-    //METHOD TO SORT STATE CENSUS DATA BY POPULATION
+    //METHOD TO SORT STATE CENSUS DATA BY POPULATION DENSITY
     public String getPopulationDensityWiseSortedCensusData() throws StateAnalyzerException {
         if (censusMap == null || censusMap.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
         Comparator<CensusDAO> censusComparator = Comparator.comparing(stateCensus -> stateCensus.density);
-        List<CensusDAO> censusList = censusMap.values().stream().collect(Collectors.toList());
-        this.sort(censusComparator, censusList);
-        Collections.reverse(censusList);
-        String toJson = new Gson().toJson(censusList);
-        return toJson;
+        ArrayList censusDTO = censusMap.values().stream()
+                .sorted(censusComparator)
+                .map(censusDAO -> censusDAO.getCensusDTO(country))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return new Gson().toJson(censusDTO);
     }
 
     //METHOD TO SORT STATE CENSUS DATA BY AREA WISE
