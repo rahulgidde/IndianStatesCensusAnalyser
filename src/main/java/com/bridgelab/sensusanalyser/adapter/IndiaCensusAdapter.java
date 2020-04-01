@@ -29,7 +29,7 @@ public class IndiaCensusAdapter extends CensusAdapter {
         return this.loadIndiaStateCode(censusMap, csvFilePath[1]);
     }
 
-    //FUNCTION TO LOAD US  CENSUS DATA
+    //METHOD TO LOAD STATE CODE DATA
     private <E> Map<String, CensusDAO> loadIndiaStateCode(Map<String, CensusDAO> censusMap, String csvFilePath) throws StateAnalyzerException {
         String extension = CensusAnalyser.getFileExtension(new File(csvFilePath));
         if (extension.compareTo("csv") != 0) {

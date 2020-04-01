@@ -1,13 +1,13 @@
 package com.bridgelab.sensusanalyser.censusanalyser;
 
-        import com.bridgelab.sensusanalyser.dao.CensusDAO;
-        import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
-        import com.google.gson.Gson;
-        import org.junit.Assert;
-        import org.junit.Test;
-        import com.bridgelab.sensusanalyser.service.CensusAnalyser;
+import com.bridgelab.sensusanalyser.dao.CensusDAO;
+import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
+import com.google.gson.Gson;
+import org.junit.Assert;
+import org.junit.Test;
+import com.bridgelab.sensusanalyser.service.CensusAnalyser;
 
-        import java.io.IOException;
+import java.io.IOException;
 
 public class StateCensusAnalyzerTest {
 
@@ -183,5 +183,17 @@ public class StateCensusAnalyzerTest {
     public void givenUSCensusData_WhenNumberOfRecordMatches_ThenReturnNumberOfRecords() throws StateAnalyzerException {
         result = censusAnalyzer.loadCensusData(CensusAnalyser.COUNTRY.US, US_CENSUS_CSV_FILE_PATH);
         Assert.assertEquals(51, result);
+    }
+
+    @Test
+    public void givenUSStateCensusData_WhenSortedOnPopulation_ShouldReturnSortedResult() {
+        try {
+            censusAnalyzer.loadCensusData(CensusAnalyser.COUNTRY.US, US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyzer.getPopulationWiseSortedCensusData();
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals("California", censusCSV[0].state);
+        } catch (StateAnalyzerException e) {
+            e.getStackTrace();
+        }
     }
 }
