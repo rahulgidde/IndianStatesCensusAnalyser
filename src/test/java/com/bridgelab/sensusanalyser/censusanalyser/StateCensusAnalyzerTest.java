@@ -210,4 +210,17 @@ public class StateCensusAnalyzerTest {
             e.getStackTrace();
         }
     }
+
+    @Test
+    public void givenUSStateCensusData_WhenSortedOnDensity_ShouldReturnSortedResult() {
+        try {
+            CensusAnalyser censusAnalyzer = new CensusAnalyser(CensusAnalyser.Country.US);
+            censusAnalyzer.loadCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyzer.getSortedCensusData(CensusAnalyser.SortingMode.DENSITY);
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals("District of Columbia", censusCSV[50].state);
+        } catch (StateAnalyzerException e) {
+            e.getStackTrace();
+        }
+    }
 }
