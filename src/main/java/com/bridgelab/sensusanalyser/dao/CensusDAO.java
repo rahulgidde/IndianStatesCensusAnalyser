@@ -1,15 +1,13 @@
 package com.bridgelab.sensusanalyser.dao;
 
-        import com.bridgelab.sensusanalyser.dto.CSVStatesCensus;
-        import com.bridgelab.sensusanalyser.dto.CSVStatesCode;
-        import com.bridgelab.sensusanalyser.dto.USCensusCSV;
-        import com.bridgelab.sensusanalyser.service.CensusAnalyser;
+import com.bridgelab.sensusanalyser.dto.CSVStatesCensus;
+import com.bridgelab.sensusanalyser.dto.CSVStatesCode;
+import com.bridgelab.sensusanalyser.dto.USCensusCSV;
+import com.bridgelab.sensusanalyser.service.CensusAnalyser;
 
 public class CensusDAO {
     public String state;
     public int population;
-    public double area;
-    public double density;
     public String stateCode;
     public double areaInSqKm;
     public double densityPerSqKm;
@@ -17,8 +15,8 @@ public class CensusDAO {
     public CensusDAO(CSVStatesCensus csvStateCensus) {
         this.state = csvStateCensus.getState();
         this.population = csvStateCensus.getPopulation();
-        this.area = csvStateCensus.getAreaInSqKm();
-        this.density = csvStateCensus.getDensityPerSqKm();
+        this.areaInSqKm = csvStateCensus.getAreaInSqKm();
+        this.densityPerSqKm = csvStateCensus.getDensityPerSqKm();
     }
 
     public CensusDAO(CSVStatesCode csvStatesCode) {

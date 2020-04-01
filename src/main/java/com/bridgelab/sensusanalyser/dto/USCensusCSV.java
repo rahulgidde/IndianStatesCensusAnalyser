@@ -4,6 +4,19 @@ import com.opencsv.bean.CsvBindByName;
 
 public class USCensusCSV {
 
+    //DEFAULT CONSTRUCTOR
+    public USCensusCSV() {
+    }
+
+    //PARAMETRIZED CONSTRUCTOR
+    public USCensusCSV(String stateId, String state, int population, double totalArea, double populationDensity) {
+        this.stateId = stateId;
+        this.state = state;
+        this.population = population;
+        this.totalArea = totalArea;
+        this.densityPerSqKm = populationDensity;
+    }
+
     @CsvBindByName(column = "State Id", required = true)
     private String stateId;
 
@@ -22,14 +35,7 @@ public class USCensusCSV {
     @CsvBindByName(column = "Population Density", required = true)
     private double densityPerSqKm;
 
-    public USCensusCSV(String stateCode, String state, int population, double areaInSqKm, int population1) {
-        this.stateId = stateId;
-        this.state = state;
-        this.population = population;
-        this.totalArea = totalArea;
-        this.densityPerSqKm = populationDensity;
-    }
-
+    //GETTER
     public String getStateId() {
         return stateId;
     }
