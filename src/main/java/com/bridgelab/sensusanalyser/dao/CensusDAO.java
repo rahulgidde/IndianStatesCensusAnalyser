@@ -5,6 +5,8 @@ import com.bridgelab.sensusanalyser.dto.CSVStatesCode;
 import com.bridgelab.sensusanalyser.dto.USCensusCSV;
 import com.bridgelab.sensusanalyser.service.CensusAnalyser;
 
+import java.util.Comparator;
+
 public class CensusDAO {
     public String state;
     public int population;
@@ -30,9 +32,21 @@ public class CensusDAO {
         this.population = usCensusCSV.getPopulation();
     }
 
-    public Object getCensusDTO(CensusAnalyser.COUNTRY country) {
-        if (country.equals(CensusAnalyser.COUNTRY.INDIA))
+    public Object getCensusDTO(CensusAnalyser.Country country) {
+        if (country.equals(CensusAnalyser.Country.INDIA))
             return new CSVStatesCensus(state, population, areaInSqKm, densityPerSqKm);
         return new USCensusCSV(stateCode, state, population, areaInSqKm, population);
+    }
+
+    public static Comparator<CensusDAO> getComparator(CensusAnalyser.SortingMode mode) {
+        if (mode.equals(CensusAnalyser.SortingMode.STATE))
+            return Comparator.comparing(census -> census.state);
+        if (mode.equals(CensusAnalyser.SortingMode.POPULATION))
+            return Comparator.comparing(census -> census.population);
+        if (mode.equals(CensusAnalyser.SortingMode.DENSITY))
+            return Comparator.comparing(census -> census.densityPerSqKm);
+        if (mode.equals(CensusAnalyser.SortingMode.AREA))
+            return Comparator.comparing(census -> census.areaInSqKm);
+        return null;
     }
 }
