@@ -22,10 +22,11 @@ import java.util.stream.StreamSupport;
 
 public abstract class CensusAdapter {
     Map<String, CensusDAO> censusMap = new HashMap<>();
+
     public abstract Map<String, CensusDAO> loadCensusData(String... csvFilePath) throws StateAnalyzerException;
 
     //METHOD TO LOAD THE CSV FILE AND GET RECORDS
-    public <E> Map<String, CensusDAO> loadCensusData(Class<E> className, String... csvFilePath)  throws StateAnalyzerException{
+    public <E> Map<String, CensusDAO> loadCensusData(Class<E> className, String... csvFilePath) throws StateAnalyzerException {
         String extension = CensusAnalyser.getFileExtension(new File(csvFilePath[0]));
         if (extension.compareTo("csv") != 0) {
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_TYPE,
@@ -45,8 +46,7 @@ public abstract class CensusAdapter {
                         .map(USCensusCSV.class::cast)
                         .forEach(censusCSV -> censusMap.put(censusCSV.getState(), new CensusDAO(censusCSV)));
                 return censusMap;
-            }
-            else {
+            } else {
                 throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_COUNTRY, "Wrong country name");
             }
         } catch (NoSuchFileException e) {

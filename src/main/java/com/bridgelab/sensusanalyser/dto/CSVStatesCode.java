@@ -18,6 +18,7 @@ public class CSVStatesCode {
     @CsvBindByName(column = "StateCode", required = true)
     private String StateCode;
 
+    //GETTER
     public int getSrNo() {
         return SrNo;
     }

@@ -3,6 +3,19 @@ package com.bridgelab.sensusanalyser.dto;
 import com.opencsv.bean.CsvBindByName;
 
 public class CSVStatesCensus {
+
+    //DEFAULT CONSTRUCTOR
+    public CSVStatesCensus() {
+    }
+
+    //PARAMETRIZED CONSTRUCTOR
+    public CSVStatesCensus(String state, int population, double areaInSqKm, double densityPerSqKm) {
+        this.state = state;
+        this.population = population;
+        this.areaInSqKm = areaInSqKm;
+        this.densityPerSqKm = densityPerSqKm;
+    }
+
     @CsvBindByName(column = "State", required = true)
     private String state;
 
@@ -15,14 +28,7 @@ public class CSVStatesCensus {
     @CsvBindByName(column = "DensityPerSqKm", required = true)
     private double densityPerSqKm;
 
-    public CSVStatesCensus(String state, int population, double areaInSqKm, double densityPerSqKm) {
-        this.state = state;
-        this.population = population;
-        this.areaInSqKm = areaInSqKm;
-        this.densityPerSqKm = densityPerSqKm;
-    }
-
-    //GETTER AND SETTER
+    //GETTER
     public String getState() {
         return state;
     }

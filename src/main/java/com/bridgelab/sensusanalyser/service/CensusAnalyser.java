@@ -27,7 +27,7 @@ public class CensusAnalyser {
 
     //PARAMETRIZED CONSTRUCTOR
     public CensusAnalyser(COUNTRY country) {
-        this.country=country;
+        this.country = country;
     }
 
     //GENERIC METHOD LOADING EVERY FILE DATA
@@ -73,7 +73,7 @@ public class CensusAnalyser {
     public String getPopulationDensityWiseSortedCensusData() throws StateAnalyzerException {
         if (censusMap == null || censusMap.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
-        Comparator<CensusDAO> censusComparator = Comparator.comparing(stateCensus -> stateCensus.density);
+        Comparator<CensusDAO> censusComparator = Comparator.comparing(stateCensus -> stateCensus.densityPerSqKm);
         ArrayList censusDTO = censusMap.values().stream()
                 .sorted(censusComparator)
                 .map(censusDAO -> censusDAO.getCensusDTO(country))
@@ -85,12 +85,12 @@ public class CensusAnalyser {
     public String getAreaWiseSortedCensusData() throws StateAnalyzerException {
         if (censusMap == null || censusMap.size() == 0)
             throw new StateAnalyzerException(StateAnalyzerException.ExceptionType.NO_SUCH_CENSUS_DATA, "Data not found");
-        Comparator<CensusDAO> censusComparator = Comparator.comparing(stateCensus -> stateCensus.area);
-        List<CensusDAO> censusList = censusMap.values().stream().collect(Collectors.toList());
-        this.sort(censusComparator, censusList);
-        Collections.reverse(censusList);
-        String toJson = new Gson().toJson(censusList);
-        return toJson;
+        Comparator<CensusDAO> censusComparator = Comparator.comparing(stateCensus -> stateCensus.areaInSqKm);
+        ArrayList censusDTO = censusMap.values().stream()
+                .sorted(censusComparator)
+                .map(censusDAO -> censusDAO.getCensusDTO(country))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return new Gson().toJson(censusDTO);
     }
 
     //METHOD TO SORT STATE CENSUS DATA BY POPULATION DENSITY
