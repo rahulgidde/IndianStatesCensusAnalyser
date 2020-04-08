@@ -1,9 +1,9 @@
-package com.bridgelab.sensusanalyser.dao;
+package com.bridgelab.censusanalyser.dao;
 
-import com.bridgelab.sensusanalyser.dto.CSVStatesCensus;
-import com.bridgelab.sensusanalyser.dto.CSVStatesCode;
-import com.bridgelab.sensusanalyser.dto.USCensusCSV;
-import com.bridgelab.sensusanalyser.service.CensusAnalyser;
+import com.bridgelab.censusanalyser.dto.CSVStatesCensus;
+import com.bridgelab.censusanalyser.dto.CSVStatesCode;
+import com.bridgelab.censusanalyser.dto.USCensusCSV;
+import com.bridgelab.censusanalyser.service.CensusAnalyser;
 
 import java.util.Comparator;
 

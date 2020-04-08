@@ -1,9 +1,9 @@
-package com.bridgelab.sensusanalyser.service;
+package com.bridgelab.censusanalyser.service;
 
-import com.bridgelab.sensusanalyser.adapter.CensusAdapter;
-import com.bridgelab.sensusanalyser.adapter.CensusAdapterFactory;
-import com.bridgelab.sensusanalyser.dao.CensusDAO;
-import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
+import com.bridgelab.censusanalyser.adapter.CensusAdapter;
+import com.bridgelab.censusanalyser.adapter.CensusAdapterFactory;
+import com.bridgelab.censusanalyser.dao.CensusDAO;
+import com.bridgelab.censusanalyser.exception.StateAnalyzerException;
 import com.google.gson.Gson;
 import org.apache.commons.collections.map.HashedMap;
 

@@ -1,13 +1,13 @@
-package com.bridgelab.sensusanalyser.adapter;
+package com.bridgelab.censusanalyser.adapter;
 
-import com.bridgelab.sensusanalyser.censusanalyserproject.CsvBuilderFactory;
-import com.bridgelab.sensusanalyser.censusanalyserproject.IcsvBuilder;
-import com.bridgelab.sensusanalyser.dao.CensusDAO;
-import com.bridgelab.sensusanalyser.dto.CSVStatesCensus;
-import com.bridgelab.sensusanalyser.dto.USCensusCSV;
-import com.bridgelab.sensusanalyser.exception.CsvBuilderException;
-import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
-import com.bridgelab.sensusanalyser.service.CensusAnalyser;
+import com.bridgelab.censusanalyser.censusanalyserproject.CsvBuilderFactory;
+import com.bridgelab.censusanalyser.censusanalyserproject.IcsvBuilder;
+import com.bridgelab.censusanalyser.dao.CensusDAO;
+import com.bridgelab.censusanalyser.dto.CSVStatesCensus;
+import com.bridgelab.censusanalyser.dto.USCensusCSV;
+import com.bridgelab.censusanalyser.exception.CsvBuilderException;
+import com.bridgelab.censusanalyser.exception.StateAnalyzerException;
+import com.bridgelab.censusanalyser.service.CensusAnalyser;
 
 import java.io.File;
 import java.io.IOException;

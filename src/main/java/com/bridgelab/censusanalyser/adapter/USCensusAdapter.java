@@ -1,8 +1,8 @@
-package com.bridgelab.sensusanalyser.adapter;
+package com.bridgelab.censusanalyser.adapter;
 
-import com.bridgelab.sensusanalyser.dao.CensusDAO;
-import com.bridgelab.sensusanalyser.dto.USCensusCSV;
-import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
+import com.bridgelab.censusanalyser.dao.CensusDAO;
+import com.bridgelab.censusanalyser.dto.USCensusCSV;
+import com.bridgelab.censusanalyser.exception.StateAnalyzerException;
 
 import java.util.Map;
 

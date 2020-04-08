@@ -1,11 +1,11 @@
-package com.bridgelab.sensusanalyser.censusanalyser;
+package com.bridgelab.censusanalyser.censusanalyser;
 
-import com.bridgelab.sensusanalyser.dao.CensusDAO;
-import com.bridgelab.sensusanalyser.exception.StateAnalyzerException;
+import com.bridgelab.censusanalyser.dao.CensusDAO;
+import com.bridgelab.censusanalyser.exception.StateAnalyzerException;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
-import com.bridgelab.sensusanalyser.service.CensusAnalyser;
+import com.bridgelab.censusanalyser.service.CensusAnalyser;
 
 public class StateCensusAnalyzerTest {
 

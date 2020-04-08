@@ -1,4 +1,4 @@
-package com.bridgelab.sensusanalyser.dto;
+package com.bridgelab.censusanalyser.dto;
 
 import com.opencsv.bean.CsvBindByName;
 

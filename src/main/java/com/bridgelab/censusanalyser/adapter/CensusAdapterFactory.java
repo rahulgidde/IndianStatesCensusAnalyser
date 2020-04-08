@@ -1,6 +1,6 @@
-package com.bridgelab.sensusanalyser.adapter;
+package com.bridgelab.censusanalyser.adapter;
 
-import com.bridgelab.sensusanalyser.service.CensusAnalyser;
+import com.bridgelab.censusanalyser.service.CensusAnalyser;
 
 public class CensusAdapterFactory {
     public static CensusAdapter getCensusData(CensusAnalyser.Country country) {

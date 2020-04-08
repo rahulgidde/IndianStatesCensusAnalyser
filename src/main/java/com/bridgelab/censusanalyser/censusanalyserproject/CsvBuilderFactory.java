@@ -1,4 +1,4 @@
-package com.bridgelab.sensusanalyser.censusanalyserproject;
+package com.bridgelab.censusanalyser.censusanalyserproject;
 
 public class CsvBuilderFactory {
     public static IcsvBuilder createCsvBuilder() {
